@@ -1,0 +1,69 @@
+name: YoshirouuusEconomy
+version: '${project.version}'
+main: me.yoshirouuu.yoshirouuuseconomy.yoshirouuuseconomy
+api-version: 1.19
+authors: [ Yoshirouuu ]
+description: A simple economy plugin
+commands:
+  balance:
+    description: Gets the players current balance.
+    usage: /balance
+    permission: yeconomy.balance
+    aliases: bal
+  pay:
+    description: Pay another player from your balance.
+    usage: /pay <Player> <Amount>
+    permission: yeconomy.pay
+  addfunds:
+    description: Adds funds to a players balance without taking any from the sender.
+    usage: /addfunds <Player> <Amount>
+    permission: yeconomy.addfunds
+  setfunds:
+    description: Sets the funds of a players balance to the amount specified.
+    usage: /setfunds <Player> <Amount>
+    permission: yeconomy.setfunds
+  grandexchange:
+    description: Opens the hub for player sold items
+    usage: /grandexchange
+    permission: yeconomy.ge
+    aliases: ge
+  sellhand:
+    description: Adds the items in hand to the Grand Exchange for 7 days.
+    usage: /sellhand <Amount>
+    permission: yeconomy.geadd
+    aliases: sh
+  leaderboard:
+    description: Shows the server's top earners.
+    usage: /leaderboard
+    permission: yeconomy.leaderboard
+    aliases: lb
+  exchange:
+    description: Opens the hub for exchanging your items for currency.
+    usage: /grandexchange
+    permission: yeconomy.exchange
+    aliases: ex
+permissions:
+  yeconomy.balance:
+    description: none
+    default: true
+  yeconomy.pay:
+    description: none
+    default: true
+  yeconomy.addfunds:
+    description: none
+    default: false
+  yeconomy.setfunds:
+    description: none
+    default: false
+  yeconomy.ge:
+    description: none
+    default: true
+  yeconomy.geadd:
+    description: none
+    default: true
+  yeconomy.leaderboard:
+    description: none
+    default: true
+  yeconomy.exchange:
+    description: none
+    default: true
