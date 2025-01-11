@@ -1,6 +1,5 @@
-package me.yoshirouuu.yoshirouuuseconomy.commands;
+package me.conormcdr.servereconomy.commands;
 
-import me.yoshirouuu.yoshirouuuseconomy.yoshirouuuseconomy;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
@@ -9,9 +8,9 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import java.util.UUID;
+import me.conormcdr.servereconomy.servereconomy;
 
-public class Pay implements CommandExecutor {
+public class SetFunds implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args)
@@ -19,7 +18,7 @@ public class Pay implements CommandExecutor {
         if (sender instanceof Player)
         {
             Player p = (Player) sender;
-            if (p.hasPermission("yeconomy.pay"))
+            if (p.hasPermission("seconomy.setfunds"))
             {
                 if (args.length >= 2)
                 {
@@ -39,46 +38,22 @@ public class Pay implements CommandExecutor {
                         return true;
                     }
 
-                    if (payAmount <= 0)
+                    if (payAmount < 0)
                     {
                         p.sendMessage(ChatColor.RED + "Invalid amount.");
                         return true;
                     }
 
-                    int balance = yoshirouuuseconomy.GetBalance(p.getName());
-
-                    if (payAmount > balance)
-                    {
-                        p.sendMessage(ChatColor.RED + "Insufficient funds.");
-                        return true;
-                    }
-
-                    String payerName = p.getName();
                     String payeeName = payee.getName();
 
-                    int tax = yoshirouuuseconomy.GetPaymentTax();
-                    int amountTaxed = 0;
-                    if (tax > 0)
-                    {
-                        amountTaxed = (int)(((float)payAmount / 100f) * (float)tax);
-                    }
-                    payAmount -= amountTaxed;
+                    servereconomy.SetFunds(payeeName, payAmount);
 
-                    yoshirouuuseconomy.PayPlayer(payerName, payeeName, payAmount);
+                    String currency = servereconomy.GetCurrency();
 
-                    String currency = yoshirouuuseconomy.GetCurrency();
-                    if (amountTaxed > 0)
-                    {
-                        p.sendMessage(ChatColor.GREEN + "Successfully paid " + currency + payAmount +
-                                " to " + payeeName + ChatColor.RED + " (Tax: " + currency + amountTaxed + ")");
-                    }
-                    else
-                    {
-                        p.sendMessage(ChatColor.GREEN + "Successfully paid " + currency + payAmount + " to " + payeeName);
-                    }
+                    p.sendMessage(ChatColor.GREEN + "Successfully set " + payeeName + "'s account balance to " + currency + payAmount);
                     if (payee.isOnline())
                     {
-                        payee.getPlayer().sendMessage(ChatColor.GREEN + payerName + " has sent you " + currency + payAmount);
+                        payee.getPlayer().sendMessage(ChatColor.GREEN + "Your account balance has been set to " + currency + payAmount);
                     }
                 }
                 else

@@ -1,6 +1,5 @@
-package me.yoshirouuu.yoshirouuuseconomy.commands;
+package me.conormcdr.servereconomy.commands;
 
-import me.yoshirouuu.yoshirouuuseconomy.yoshirouuuseconomy;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
@@ -9,7 +8,9 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class SetFunds implements CommandExecutor {
+import me.conormcdr.servereconomy.servereconomy;
+
+public class AddFunds implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args)
@@ -17,7 +18,7 @@ public class SetFunds implements CommandExecutor {
         if (sender instanceof Player)
         {
             Player p = (Player) sender;
-            if (p.hasPermission("yeconomy.setfunds"))
+            if (p.hasPermission("seconomy.addfunds"))
             {
                 if (args.length >= 2)
                 {
@@ -37,7 +38,7 @@ public class SetFunds implements CommandExecutor {
                         return true;
                     }
 
-                    if (payAmount < 0)
+                    if (payAmount <= 0)
                     {
                         p.sendMessage(ChatColor.RED + "Invalid amount.");
                         return true;
@@ -45,14 +46,14 @@ public class SetFunds implements CommandExecutor {
 
                     String payeeName = payee.getName();
 
-                    yoshirouuuseconomy.SetFunds(payeeName, payAmount);
+                    servereconomy.AddFunds(payeeName, payAmount);
 
-                    String currency = yoshirouuuseconomy.GetCurrency();
+                    String currency = servereconomy.GetCurrency();
 
-                    p.sendMessage(ChatColor.GREEN + "Successfully set " + payeeName + "'s account balance to " + currency + payAmount);
+                    p.sendMessage(ChatColor.GREEN + "Successfully paid " + currency + payAmount + " to " + payeeName);
                     if (payee.isOnline())
                     {
-                        payee.getPlayer().sendMessage(ChatColor.GREEN + "Your account balance has been set to " + currency + payAmount);
+                        payee.getPlayer().sendMessage(ChatColor.GREEN + "Funds of " + currency + payAmount + " have been added to your account.");
                     }
                 }
                 else

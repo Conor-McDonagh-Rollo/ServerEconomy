@@ -1,7 +1,5 @@
-package me.yoshirouuu.yoshirouuuseconomy.commands;
+package me.conormcdr.servereconomy.commands;
 
-import me.yoshirouuu.yoshirouuuseconomy.GEItem;
-import me.yoshirouuu.yoshirouuuseconomy.yoshirouuuseconomy;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -15,6 +13,9 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 
+import me.conormcdr.servereconomy.GEItem;
+import me.conormcdr.servereconomy.servereconomy;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,7 +28,7 @@ public class GrandExchange implements CommandExecutor
         if (sender instanceof Player)
         {
             Player p = (Player) sender;
-            if (p.hasPermission("yeconomy.ge"))
+            if (p.hasPermission("seconomy.ge"))
             {
                 int pageNo = 0;
                 if (args.length > 0)
@@ -46,7 +47,7 @@ public class GrandExchange implements CommandExecutor
 
                 Inventory gui = Bukkit.createInventory(p, 54, "Grand Exchange");
 
-                String currency = yoshirouuuseconomy.GetCurrency();
+                String currency = servereconomy.GetCurrency();
 
                 // PAGE FILLER ///////////////////////////////////////////////////
                 ItemStack filler = new ItemStack(Material.GRAY_STAINED_GLASS_PANE);
@@ -62,7 +63,7 @@ public class GrandExchange implements CommandExecutor
                     slots[i] = filler;
                 }
 
-                List<GEItem> list = yoshirouuuseconomy.GetGE();
+                List<GEItem> list = servereconomy.GetGE();
 
                 int index = 10; // 2nd row 2nd col
                 int listIndex = 0;
@@ -116,7 +117,7 @@ public class GrandExchange implements CommandExecutor
                             if (geitem.GetSold()) slots[index] = new ItemStack(Material.BARRIER);
                             ItemMeta meta = slots[index].getItemMeta();
                             if (geitem.GetSold()) meta.setDisplayName(ChatColor.RED + "SOLD");
-                            meta.getPersistentDataContainer().set(new NamespacedKey(yoshirouuuseconomy.Get(),
+                            meta.getPersistentDataContainer().set(new NamespacedKey(servereconomy.Get(),
                                     "Index"), PersistentDataType.INTEGER, listIndex);
                             List<String> lore = new ArrayList<>();
                             lore.add("Owner: " + geitem.GetOwner());
@@ -139,7 +140,7 @@ public class GrandExchange implements CommandExecutor
 
                 gui.setContents(slots);
 
-                yoshirouuuseconomy.currentGEPage = pageNo;
+                servereconomy.currentGEPage = pageNo;
 
                 p.openInventory(gui);
             }

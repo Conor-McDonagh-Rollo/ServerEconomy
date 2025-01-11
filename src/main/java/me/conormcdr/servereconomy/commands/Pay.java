@@ -1,6 +1,5 @@
-package me.yoshirouuu.yoshirouuuseconomy.commands;
+package me.conormcdr.servereconomy.commands;
 
-import me.yoshirouuu.yoshirouuuseconomy.yoshirouuuseconomy;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
@@ -9,7 +8,11 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class AddFunds implements CommandExecutor {
+import me.conormcdr.servereconomy.servereconomy;
+
+import java.util.UUID;
+
+public class Pay implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args)
@@ -17,7 +20,7 @@ public class AddFunds implements CommandExecutor {
         if (sender instanceof Player)
         {
             Player p = (Player) sender;
-            if (p.hasPermission("yeconomy.addfunds"))
+            if (p.hasPermission("seconomy.pay"))
             {
                 if (args.length >= 2)
                 {
@@ -43,16 +46,40 @@ public class AddFunds implements CommandExecutor {
                         return true;
                     }
 
+                    int balance = servereconomy.GetBalance(p.getName());
+
+                    if (payAmount > balance)
+                    {
+                        p.sendMessage(ChatColor.RED + "Insufficient funds.");
+                        return true;
+                    }
+
+                    String payerName = p.getName();
                     String payeeName = payee.getName();
 
-                    yoshirouuuseconomy.AddFunds(payeeName, payAmount);
+                    int tax = servereconomy.GetPaymentTax();
+                    int amountTaxed = 0;
+                    if (tax > 0)
+                    {
+                        amountTaxed = (int)(((float)payAmount / 100f) * (float)tax);
+                    }
+                    payAmount -= amountTaxed;
 
-                    String currency = yoshirouuuseconomy.GetCurrency();
+                    servereconomy.PayPlayer(payerName, payeeName, payAmount);
 
-                    p.sendMessage(ChatColor.GREEN + "Successfully paid " + currency + payAmount + " to " + payeeName);
+                    String currency = servereconomy.GetCurrency();
+                    if (amountTaxed > 0)
+                    {
+                        p.sendMessage(ChatColor.GREEN + "Successfully paid " + currency + payAmount +
+                                " to " + payeeName + ChatColor.RED + " (Tax: " + currency + amountTaxed + ")");
+                    }
+                    else
+                    {
+                        p.sendMessage(ChatColor.GREEN + "Successfully paid " + currency + payAmount + " to " + payeeName);
+                    }
                     if (payee.isOnline())
                     {
-                        payee.getPlayer().sendMessage(ChatColor.GREEN + "Funds of " + currency + payAmount + " have been added to your account.");
+                        payee.getPlayer().sendMessage(ChatColor.GREEN + payerName + " has sent you " + currency + payAmount);
                     }
                 }
                 else

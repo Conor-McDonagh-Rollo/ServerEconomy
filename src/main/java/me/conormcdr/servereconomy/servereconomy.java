@@ -1,6 +1,5 @@
-package me.yoshirouuu.yoshirouuuseconomy;
+package me.conormcdr.servereconomy;
 
-import me.yoshirouuu.yoshirouuuseconomy.commands.*;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -14,12 +13,14 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitScheduler;
 
+import me.conormcdr.servereconomy.commands.*;
+
 import java.util.*;
 import java.util.HashMap;
 
-public final class yoshirouuuseconomy extends JavaPlugin implements Listener {
+public final class servereconomy extends JavaPlugin implements Listener {
 
-    private static yoshirouuuseconomy plugin;
+    private static servereconomy plugin;
 
     private static HashMap<String, Integer> playerBalances = new HashMap<>();
     private static HashMap<Material, Integer> exchangeIndex = new HashMap<>();
@@ -323,5 +324,5 @@ public final class yoshirouuuseconomy extends JavaPlugin implements Listener {
 
     public static HashMap<String, Integer> GetBalances() { return playerBalances; }
     public static HashMap<Material, Integer> GetExchangeIndex() { return exchangeIndex; }
-    public static yoshirouuuseconomy Get() { return plugin; }
+    public static servereconomy Get() { return plugin; }
 }

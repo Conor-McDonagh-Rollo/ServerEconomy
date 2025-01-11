@@ -1,11 +1,12 @@
-package me.yoshirouuu.yoshirouuuseconomy.commands;
+package me.conormcdr.servereconomy.commands;
 
-import me.yoshirouuu.yoshirouuuseconomy.yoshirouuuseconomy;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+
+import me.conormcdr.servereconomy.servereconomy;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -17,10 +18,10 @@ public class Leaderboard  implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (sender instanceof Player) {
             Player p = (Player) sender;
-            if (p.hasPermission("yeconomy.leaderboard")) {
+            if (p.hasPermission("seconomy.leaderboard")) {
 
                 HashMap<String, Integer> bals = new HashMap<>();
-                bals.putAll(yoshirouuuseconomy.GetBalances());
+                bals.putAll(servereconomy.GetBalances());
                 List<String> keys = new ArrayList<>();
                 for (String key : bals.keySet())
                 {
@@ -51,7 +52,7 @@ public class Leaderboard  implements CommandExecutor {
                 p.sendMessage(ChatColor.GOLD + "------Leaderboard------");
                 for (int i = 0; i < sortedString.size(); i++)
                 {
-                    p.sendMessage(ChatColor.GOLD + "(" + order + ") " + yoshirouuuseconomy.GetCurrency() +
+                    p.sendMessage(ChatColor.GOLD + "(" + order + ") " + servereconomy.GetCurrency() +
                             sortedInteger.get(i) + " - " + sortedString.get(i));
                     order++;
                 }

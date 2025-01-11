@@ -1,11 +1,12 @@
-package me.yoshirouuu.yoshirouuuseconomy.commands;
+package me.conormcdr.servereconomy.commands;
 
-import me.yoshirouuu.yoshirouuuseconomy.yoshirouuuseconomy;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+
+import me.conormcdr.servereconomy.servereconomy;
 
 public class Balance implements CommandExecutor {
 
@@ -15,10 +16,10 @@ public class Balance implements CommandExecutor {
         if (sender instanceof Player)
         {
             Player p = (Player) sender;
-            if (p.hasPermission("yeconomy.balance"))
+            if (p.hasPermission("seconomy.balance"))
             {
-                int balance = yoshirouuuseconomy.GetBalance(p.getName());
-                String currency = yoshirouuuseconomy.GetCurrency();
+                int balance = servereconomy.GetBalance(p.getName());
+                String currency = servereconomy.GetCurrency();
                 p.sendMessage(ChatColor.GREEN + "Your current balance is " + currency + balance);
             }
             else

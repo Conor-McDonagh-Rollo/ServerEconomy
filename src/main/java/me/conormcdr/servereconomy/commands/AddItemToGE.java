@@ -1,6 +1,5 @@
-package me.yoshirouuu.yoshirouuuseconomy.commands;
+package me.conormcdr.servereconomy.commands;
 
-import me.yoshirouuu.yoshirouuuseconomy.yoshirouuuseconomy;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -8,6 +7,8 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+
+import me.conormcdr.servereconomy.servereconomy;
 
 public class AddItemToGE implements CommandExecutor
 {
@@ -17,7 +18,7 @@ public class AddItemToGE implements CommandExecutor
         if (sender instanceof Player)
         {
             Player p = (Player) sender;
-            if (p.hasPermission("yeconomy.geadd"))
+            if (p.hasPermission("seconomy.geadd"))
             {
                 if (args.length >= 1)
                 {
@@ -34,7 +35,7 @@ public class AddItemToGE implements CommandExecutor
 
                     ItemStack item = p.getInventory().getItemInMainHand();
 
-                    if (yoshirouuuseconomy.AddItemStackToGE(p, item, cost))
+                    if (servereconomy.AddItemStackToGE(p, item, cost))
                     {
                         p.getInventory().setItemInMainHand(null);
                         p.sendMessage(ChatColor.GOLD + "Your item has been safely shipped to the Grand Exchange. If unsold, the item will return to you in a week.");

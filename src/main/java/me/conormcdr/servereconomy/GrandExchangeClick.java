@@ -1,4 +1,4 @@
-package me.yoshirouuu.yoshirouuuseconomy;
+package me.conormcdr.servereconomy;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -39,7 +39,7 @@ public class GrandExchangeClick implements Listener {
                     return;
                 }
                 String name = meta.getDisplayName();
-                int pageNo = yoshirouuuseconomy.currentGEPage;
+                int pageNo = servereconomy.currentGEPage;
 
                 if (name.equals(" "))
                 {
@@ -62,12 +62,12 @@ public class GrandExchangeClick implements Listener {
                     return;
                 }
 
-                NamespacedKey key = new NamespacedKey(yoshirouuuseconomy.Get(), "Index");
+                NamespacedKey key = new NamespacedKey(servereconomy.Get(), "Index");
                 PersistentDataContainer data = meta.getPersistentDataContainer();
                 if (data.has(key, PersistentDataType.INTEGER))
                 {
                     int index = data.get(key, PersistentDataType.INTEGER);
-                    yoshirouuuseconomy.TransactionGE(p, index);
+                    servereconomy.TransactionGE(p, index);
                     p.closeInventory();
                 }
 
