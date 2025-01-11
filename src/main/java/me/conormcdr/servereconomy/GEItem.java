@@ -1,4 +1,4 @@
-package me.yoshirouuu.yoshirouuuseconomy;
+package me.conormcdr.servereconomy;
 
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
